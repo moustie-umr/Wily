@@ -1,0 +1,56 @@
+import 'package:flutter/material.dart';
+
+import './pages/book.dart';
+
+class Books extends StatelessWidget{
+  final List <Map<String, String>> books;
+
+  Books(this.books);
+
+ Widget _buildBookItem(BuildContext context, int index) {
+    return Card(
+      child: Column(
+        children: <Widget>[
+          // Image.asset(Books[index]['image']),
+          // Text(Books[index]),
+          Image.asset('assets/images/adventure.jpg'),
+          Text('Test Book'),
+          ButtonBar(
+            alignment: MainAxisAlignment.center,
+            children: <Widget>[
+              FlatButton(
+                child: Text('Details'),
+                onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (BuildContext context) => BookPage(books[index]['title'], books[index]['image'], books[index]['description']),
+                      ),
+                    ),
+              )
+            ],
+          )
+        ],
+      ),
+    );
+  }
+
+  Widget _buildBookList() {
+    Widget bookCards;
+    if (books.length > 0) {
+      bookCards = ListView.builder(
+        itemBuilder: _buildBookItem,
+        itemCount: books.length,
+      );
+    } else {
+      bookCards = Container();
+    }
+    return bookCards;
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    print('[Books Widget] build()');
+    return _buildBookList();
+  }
+}
+ 
